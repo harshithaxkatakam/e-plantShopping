@@ -24,10 +24,5 @@
             "src": "/(.*)",
             "dest": "/index.html"
         }
-    ],
-    "homepage": "https://harshithaxkatakam.github.io/e-plantShopping",
-    "scripts": {
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
-    }
+    ]
 } 
