@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from './CartSlice';
 import './ProductList.css'
 import CartItem from './CartItem';
 
 function ProductList({ onHomeClick }) {
     const dispatch = useDispatch();
+    const cartItems = useSelector(state => state.cart.items);
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
+
+    // Sync addedToCart state with Redux cart state
+    useEffect(() => {
+        const cartState = {};
+        cartItems.forEach(item => {
+            cartState[item.name] = true;
+        });
+        setAddedToCart(cartState);
+    }, [cartItems]);
 
     const plantsArray = [
         {
@@ -245,7 +255,7 @@ function ProductList({ onHomeClick }) {
 
     const handleCartClick = (e) => {
         e.preventDefault();
-        setShowCart(true); // Set showCart to true when cart icon is clicked
+        setShowCart(true);
     };
     const handlePlantsClick = (e) => {
         e.preventDefault();
@@ -259,10 +269,6 @@ function ProductList({ onHomeClick }) {
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true,
-        }));
     };
 
     return (
@@ -298,7 +304,17 @@ function ProductList({ onHomeClick }) {
                 <div className="product-grid">
                     {plantsArray.map((category, index) => (
                         <div key={index}>
-                            <h1><div>{category.category}</div></h1>
+
+                            <h1>
+                                <div>
+                                    <hr />
+                                    <hr />
+                                    {category.category}
+                                    <hr />
+                                    <hr />
+                                </div></h1>
+                            {/* <hr/>
+                            <hr/> */}
                             <div className="product-list">
                                 {category.plants.map((plant, plantIndex) => (
                                     <div className="product-card" key={plantIndex}>
@@ -306,7 +322,7 @@ function ProductList({ onHomeClick }) {
                                         <div className="product-title">{plant.name}</div>
                                         <div className="product-description">{plant.description}</div>
                                         <div className="product-cost">{plant.cost}</div>
-                                        <button 
+                                        <button
                                             className={`product-button ${addedToCart[plant.name] ? 'added-to-cart' : ''}`}
                                             onClick={() => handleAddToCart(plant)}
                                             disabled={addedToCart[plant.name]}
