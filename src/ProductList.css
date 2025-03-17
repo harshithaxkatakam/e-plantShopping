@@ -98,17 +98,34 @@ body {
 }
 
 .product-button {
-    background-color: #e74c3c;
-    color: #fff;
+    background-color: #4CAF50; /* Green */
     border: none;
+    color: white;
     padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-    margin-top: 10px;
 }
 
 .product-button:hover {
-    background-color: #c0392b;
+    background-color: #45a049;
+}
+
+.product-button:disabled {
+    background-color: #cccccc;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.product-button.added-to-cart {
+    background-color: #cccccc;
+    color: white;
+    cursor: not-allowed;
 }
 
 /* Pseudo-elements - Sale badge */
